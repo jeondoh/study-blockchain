@@ -272,4 +272,7 @@ package-lock.json
 artifacts/
 build-info/
 
+# import depedencies
+.deps/
+
 # End of https://www.toptal.com/developers/gitignore/api/solidity,soliditytruffle,jetbrains
