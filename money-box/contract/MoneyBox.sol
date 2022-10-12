@@ -22,11 +22,11 @@ contract MoneyBox {
     }
 
     receive() external payable {
-        require(msg.value == 1 ether, "Must be 1 ether");
+        require(msg.value == 0.001 ether, "Must be 0.001 ether");
         require(paidMemberList[round][msg.sender] == false, "Must be a new player in each game");
         paidMemberList[round][msg.sender] = true;
         emit WhoPaid(msg.sender, msg.value);
-        if(address(this).balance == 3 ether){
+        if(address(this).balance == 0.003 ether){
             // 스마트 컨트렉에 있는 이더리움을 3번째 사람에게 전달
             (bool sent, ) = payable(msg.sender).call{value:address(this).balance}("");
             require(sent, "Failed to pay");
