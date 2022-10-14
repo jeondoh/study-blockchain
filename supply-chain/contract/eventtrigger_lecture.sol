@@ -1,6 +1,23 @@
 // SPDX-License-Identifier: GPL 3.0
 pragma solidity ^0.6.0;
 
+contract Ownable {
+    address payable _owner;
+
+    constructor() public {
+        _owner = msg.sender;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == _owner, "You are not the owner");
+        _;
+    }
+
+    function isOwner() public view returns(bool) {
+        return (msg.sender == _owner);
+    }
+}
+
 contract Item {
     uint public priceInWei;
     uint public pricePaid;
@@ -25,7 +42,7 @@ contract Item {
     fallback() external {}
 }
 
-contract ItemManager {
+contract ItemManager is Ownable {
     enum SupplyChainState {
         Created, 
         Paid, 
@@ -43,7 +60,7 @@ contract ItemManager {
 
     event SupplyChainStep(uint _itemIndex, uint _step, address _itemAddress);
 
-    function createItem(string memory _identifier, uint _itemPrice) public {
+    function createItem(string memory _identifier, uint _itemPrice) public onlyOwner {
         Item item = new Item(this, _itemPrice, itemIndex);
         items[itemIndex]._item = item;
         items[itemIndex]._identifier = _identifier;
@@ -60,7 +77,7 @@ contract ItemManager {
         emit SupplyChainStep(_itemIndex, uint(items[_itemIndex]._state), address(items[_itemIndex]._item));
     }
 
-    function triggerDelivery(uint _itemIndex) public {
+    function triggerDelivery(uint _itemIndex) public onlyOwner {
         require(items[_itemIndex]._state == SupplyChainState.Paid, "Item is further in the chain");
         items[_itemIndex]._state = SupplyChainState.Delivered;
         emit SupplyChainStep(_itemIndex, uint(items[_itemIndex]._state), address(items[_itemIndex]._item));
