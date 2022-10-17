@@ -55,6 +55,7 @@ const SaleAnimal = ({ account }: SaleAnimalProps) => {
               animalType={v.animalType}
               animalPrice={v.animalPrice}
               animalTokenId={v.animalTokenId}
+              getOnSaleAnimalTokens={getOnSaleAnimalTokens}
             />
           );
         })}
