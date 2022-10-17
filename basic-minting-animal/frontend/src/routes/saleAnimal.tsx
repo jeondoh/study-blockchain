@@ -51,8 +51,10 @@ const SaleAnimal = ({ account }: SaleAnimalProps) => {
           return (
             <SaleAnimalCard
               key={i}
+              account={account}
               animalType={v.animalType}
               animalPrice={v.animalPrice}
+              animalTokenId={v.animalTokenId}
             />
           );
         })}
