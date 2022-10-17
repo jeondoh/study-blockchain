@@ -15,7 +15,6 @@ const Main = ({ account }: MainProps) => {
       const response = await mintAnimalTokenContract.methods
         .mintAnimalToken()
         .send({ from: account });
-      console.log(response);
 
       if (response.status) {
         const balanceLength = await mintAnimalTokenContract.methods
