@@ -1,6 +1,8 @@
 import React, { FC, useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Main from "./routes/main";
+import Layout from "./components/layout";
+import MyAnimal from "./routes/myAnimal";
 
 const App: FC = () => {
   const [account, setAccount] = useState<String>("");
@@ -25,9 +27,15 @@ const App: FC = () => {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Main account={account.toString()} />} />
-      </Routes>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Main account={account.toString()} />} />
+          <Route
+            path="my-animal"
+            element={<MyAnimal account={account.toString()} />}
+          />
+        </Routes>
+      </Layout>
     </BrowserRouter>
   );
 };
