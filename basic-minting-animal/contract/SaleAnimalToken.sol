@@ -7,9 +7,10 @@ contract SaleAnimalToken {
     MintAnimalToken public mintAnimalTokenAddress;
     
     constructor(address _mintAnimalTokenAddress) {
+        // mintAnimalTokenAddress contract 초기화
         mintAnimalTokenAddress = MintAnimalToken(_mintAnimalTokenAddress);
     }
-
+    // key : animalTokenId, value: price
     mapping(uint256 => uint256) public animalTokenPrices;
     // 현재 판매중인 animal array, FE와 연동
     uint256[] public onSaleAnimalTokenArray;
@@ -22,7 +23,7 @@ contract SaleAnimalToken {
         require(animalTokenOwner == msg.sender, "Caller is not animal token owner.");
         require(_price > 0, "Price is zero or lower.");
         require(animalTokenPrices[_animalTokenId] == 0, "This animal token is already on sale.");
-        // isApprovedForAll : owner가 특정 계정에게 자신의 모든 NFT에 대한 사용을 허용했는지의 여부 반환
+        // isApprovedForAll(owner, operator) : owner가 특정 계정에게 자신의 모든 NFT에 대한 사용을 허용했는지의 여부 반환
         require(mintAnimalTokenAddress.isApprovedForAll(animalTokenOwner, address(this)), "Animal token owner did not approve token.");
 
         animalTokenPrices[_animalTokenId] = _price;
@@ -32,6 +33,7 @@ contract SaleAnimalToken {
     // NFT 를 구매하는 함수
     function purchaseAnimalToken(uint256 _animalTokenId) public payable {
         uint256 price = animalTokenPrices[_animalTokenId];
+        // ownerOf : 지정된 토큰 ID의 소유자를 가져옴
         address animalTokenOwner = mintAnimalTokenAddress.ownerOf(_animalTokenId);
         
         require(price > 0, "Animal token not sale");
