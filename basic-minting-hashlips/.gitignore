@@ -142,3 +142,10 @@ dist
 .DS_Store
 
 .idea/
+
+# artifacts
+artifacts/
+build-info/
+
+# import depedencies
+.deps/
