@@ -1,31 +1,13 @@
 require("@nomicfoundation/hardhat-toolbox");
+require("dotenv").config({path: __dirname + '/.env'});
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  defaultNetwork: "goerli",
-  networks: {
-    hardhat: {},
-    goerli: {
-      url: "https://eth-goerli.alchemyapi.io/v2/",
-      accounts: [],
-    },
-  },
-  solidity: {
     solidity: "0.8.17",
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 200,
-      },
-    },
-  },
-  paths: {
-    sources: "./contracts",
-    tests: "./test",
-    cache: "./cache",
-    artifacts: "./artifacts",
-  },
-  mocha: {
-    timeout: 40000,
-  },
+    networks: {
+        goerli: {
+            url: `https://eth-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API}`,
+            accounts: [`${process.env.METAMASK_PRIVATE_KEY}`]
+        }
+    }
 };
